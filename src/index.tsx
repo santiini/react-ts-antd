@@ -1,16 +1,21 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
 
 import App from './App';
+import configStore from './reducers/configStore';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
+const store = configStore();
 const APP_ELEMENT = document.getElementById('root');
 const render = (Component: React.ComponentClass<any>) => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <Provider store={store}>
+        <Component />
+      </Provider>
     </AppContainer>,
     APP_ELEMENT,
   );
