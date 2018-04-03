@@ -160,6 +160,12 @@ module.exports = {
             include: paths.appSrc,
             use: [
               {
+                loader: 'babel-loader',
+                options: {
+                  plugins: ['react-hot-loader/babel'],
+                },
+              },
+              {
                 loader: require.resolve('ts-loader'),
                 options: {
                   // disable type checker - we will use it in fork plugin

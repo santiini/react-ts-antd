@@ -34,6 +34,7 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: [
+    'react-hot-loader/patch',
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     // Include an alternative client for WebpackDevServer. A client's job is to
@@ -145,7 +146,6 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
               compact: true,
             },
           },
@@ -155,6 +155,12 @@ module.exports = {
             test: /\.(ts|tsx)$/,
             include: paths.appSrc,
             use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  plugins: ['react-hot-loader/babel'],
+                },
+              },
               {
                 loader: require.resolve('ts-loader'),
                 options: {
