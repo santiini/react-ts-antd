@@ -14,6 +14,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const poststylus = require('poststylus');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -233,6 +234,33 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
+          {
+            test: /\.styl$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: {
+                      loader: require.resolve('style-loader'),
+                      options: {
+                        hmr: false
+                      }
+                  },
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                        options: {
+                          importLoaders: 1,
+                          minimize: true,
+                          sourceMap: true
+                        }
+                    },
+                    {
+                      loader: require.resolve('stylus-loader')
+                    }
+                  ]
+                }
+              ), extractTextPluginOptions)
+          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
@@ -355,6 +383,29 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // poststylus
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        // stylus 的解析规则；
+        // 1. 使用 poststylus 插件结合使用 stylus 和 autoprefixer  
+          stylus: {
+            use: [
+              poststylus([ 
+                require('postcss-flexbugs-fixes'),
+                autoprefixer({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                  flexbox: 'no-2009',
+                })
+              ])
+            ]
+          }
+        }
+    }),
     // Perform type checking and linting in a separate process to speed up compilation
     new ForkTsCheckerWebpackPlugin({
       async: false,

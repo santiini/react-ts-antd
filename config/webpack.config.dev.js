@@ -12,6 +12,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const poststylus = require('poststylus');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -207,6 +208,10 @@ module.exports = {
               },
             ],
           },
+          {
+            test: /\.styl$/,
+            use: ["style-loader", "css-loader", "stylus-loader"]
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -263,6 +268,29 @@ module.exports = {
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // Perform type checking and linting in a separate process to speed up compilation
+    // stylus 插件
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        // stylus 的解析规则；
+        // 1. 使用 poststylus 插件结合使用 stylus 和 autoprefixer  
+          stylus: {
+            use: [
+              poststylus([ 
+                require('postcss-flexbugs-fixes'),
+                autoprefixer({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                  flexbox: 'no-2009',
+                })
+              ])
+            ]
+          }
+        }
+    }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
       watch: paths.appSrc,
