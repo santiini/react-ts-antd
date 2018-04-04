@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-
-// import Home from './views/Home';
-// import Demo1 from './views/Demo1';
-import resolve from './components/Bundle';
+import { asyncComponent } from 'react-async-component';
 import './App.css';
 
-const getCom = (path: string) => () => import(/* webpackChunkName: "page" */ `./views/${path}`);
-const asyncCom = (path: string) => resolve(getCom(path));
-
+// 按需加载
+const asyncCom = (path: string) => asyncComponent({
+  name: 'Page',
+  resolve: () => import(/* webpackChunkName: "page" */ `./views/${path}`),
+}); 
 const Home = asyncCom('Home');
 const Demo1 = asyncCom('Demo1');
-
 const logo = require('./logo.svg');
 class App extends React.Component {
   render() {

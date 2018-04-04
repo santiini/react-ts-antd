@@ -32,8 +32,10 @@ render(App);
 declare var module: any;
 if (module.hot) {
   module.hot.accept('./App', () => {
-    render(App); 
-    // render(require('./App').App);
+    console.log('热刷新');
+    // render(App); 
+    // import('./App').then(mod => render(mod.default))
+    render(require('./App'))
   });
 }
 

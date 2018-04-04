@@ -6,7 +6,22 @@
 
 #### 1. ant-design
 
-#### 2. 按需加载
+#### 2. 组件按需加载
+使用第三方库： react-async-component
+
+```js
+  // 1. 引入 react-async-component
+  import { asyncComponent } from 'react-async-component';
+  // 2. path => 异步加载组件函数
+  const asyncCom = (path: string) => asyncComponent({
+    name: 'Page',
+    resolve: () => import(/* webpackChunkName: "page" */ `./views/${path}`),
+  }); 
+  // 3. 每个组件的异步加载函数
+  const Home = asyncCom('Home');
+  const Demo1 = asyncCom('Demo1');
+
+```
 
 #### 3. 图片增强: 雪碧图和 lazy-load
 
@@ -41,3 +56,5 @@
 ## 项目的业务逻辑
 
 ## 项目问题分析
+
+### 按需加载 和 热刷新存在冲突
