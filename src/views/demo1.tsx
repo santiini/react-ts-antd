@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 import './index.styl';
 
 export default class Demo1 extends React.Component<any> {
@@ -18,15 +18,9 @@ export default class Demo1 extends React.Component<any> {
             <div className="">1111111111</div>
             <div className="">222222222</div>
             <div className="">222222222</div>
-            <div className="">222222222</div>
-            <div className="">33333333</div>
-            <div className="">33333333</div>
-            <div className="">33333333</div>
-            <div className="">33333333</div>
-            <div className="">33333333</div>
-            <div className="">33333333</div>
           </div>
         </div>
+        <Icon type="setting" />
       </div>
     );
   }

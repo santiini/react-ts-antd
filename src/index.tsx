@@ -29,14 +29,14 @@ render(App);
 
 // 热刷新
 // 声明类型
-declare var module: any;
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    console.log('热刷新');
-    // render(App); 
-    // import('./App').then(mod => render(mod.default))
-    render(require('./App'))
-  });
-}
+// declare var module: any;
+// if (module.hot) {
+//   module.hot.accept('./App', () => {
+//     console.log('热刷新');
+//     // render(App); 
+//     // import('./App').then(mod => render(mod.default))
+//     render(require('./App'))
+//   });
+// }
 
 registerServiceWorker();

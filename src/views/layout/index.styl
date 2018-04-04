@@ -1,0 +1,43 @@
+$navColor = #2F2F2F
+.nav
+  display flex
+  background-color $navColor
+  color #fff
+  height 50px
+  padding 0 80px
+  align-items center
+  &-menu
+    background-color $navColor
+    margin-left 50px
+    flex 1
+  // 修改 antd 中的 css: 在自定义的父元素类名下修改
+  .ant-menu .ant-menu-item-selected
+      opacity 1
+      background-color #000
+  .logo-img
+    height 36px
+  &-right
+    display flex
+    align-items center
+    opacity .5
+    .user-info
+      margin-right 15px
+.no-border
+  border-width 0;
+// popover 风格的下拉框中的 ul 和 li
+.dropdown-menu
+  list-style none
+  font-size 14px
+  margin 0
+  padding 0
+  li
+    padding 0 16px
+    height 36px
+    line-height 36px
+    margin-top 4px
+    margin-bottom 4px
+    text-overflow ellipsis
+    overflow hidden
+    cursor pointer
+    &:hover
+      color #1890ff
