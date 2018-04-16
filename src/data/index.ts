@@ -198,3 +198,5 @@ export const tagFilter = [{
     text: '娱乐',
     value: '娱乐',
   }];
+
+export { default as weibo } from './weibo.js';

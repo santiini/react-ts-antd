@@ -6,6 +6,8 @@ import { Menu } from 'antd';
 import { NavComponent } from './views/layout/Navbar';
 import { types, Type } from './data/index';
 import { asyncCom } from './utils/asyncCom';
+import { getLocalToken } from './lib/utils';
+import { api } from './utils';
 import './App.css';
 
 const menus = ['舆情分析', '用户分析', '活动分析', '意见领袖', '小工具'];
@@ -30,7 +32,21 @@ const Recommend = asyncCom('recommend/Recommend');
 const Plan = asyncCom('plan/Plan');
 const Project = asyncCom('project/Project');
 const Accounts = asyncCom('accounts/Accounts');
-class App extends React.Component {
+class App extends React.Component<any> {
+  componentDidMount() {
+    // const { sessionAction, dispatch } = this.props;
+    if (getLocalToken) {
+      console.log('api初始化');
+      api.init(); // axiox 配置初始化
+      // 请求基本信息
+    } else {
+      if (location.pathname.length > 4) {
+        sessionStorage.setItem('refer', location.pathname);
+      }
+      // 跳转主页
+      location.href = `${location.origin}/kol/signin`;
+    }
+  }
   render() {
     return (
       <Router>
