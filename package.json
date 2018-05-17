@@ -60,6 +60,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.3",
     "@types/jest": "^22.2.2",
     "@types/lodash": "^4.14.106",
     "@types/node": "^9.6.1",
